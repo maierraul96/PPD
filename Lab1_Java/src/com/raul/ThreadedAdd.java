@@ -2,13 +2,14 @@ package com.raul;
 
 public class ThreadedAdd extends ThreadedOperation {
 
-    public ThreadedAdd(int[][] firstMatrix, int[][] secondMatrix, int[][] outputMatrix,
-                       MatrixPosition posBegin, MatrixPosition posEnd, int height, int width) {
-        super(firstMatrix, secondMatrix, outputMatrix, posBegin, posEnd, height, width);
+    public ThreadedAdd(Matrix firstMatrix, Matrix secondMatrix, Matrix outputMatrix,
+                       MatrixPosition posBegin, MatrixPosition posEnd) {
+        super(firstMatrix, secondMatrix, outputMatrix, posBegin, posEnd);
     }
 
     @Override
     protected void computeFunction(int i, int j){
-        outputMatrix[i][j] = firstMatrix[i][j] + secondMatrix[i][j];
+        System.out.println("Compute i:"+i+" j:"+j);
+        outputMatrix.value[i][j] = firstMatrix.value[i][j] + secondMatrix.value[i][j];
     }
 }

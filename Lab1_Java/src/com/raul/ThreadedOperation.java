@@ -1,28 +1,25 @@
 package com.raul;
 
 abstract public class ThreadedOperation implements Runnable{
-    protected int firstMatrix [][];
-    protected int secondMatrix [][];
-    protected int outputMatrix [][];
+    protected Matrix firstMatrix;
+    protected Matrix secondMatrix;
+    protected Matrix outputMatrix;
     protected MatrixPosition posBegin;
     protected MatrixPosition posEnd;
-    protected int height, width;
 
 
 
-    public ThreadedOperation(int[][] firstMatrix, int[][] secondMatrix, int[][] outputMatrix,
-                             MatrixPosition posBegin, MatrixPosition posEnd, int height, int width) {
+    public ThreadedOperation(Matrix firstMatrix, Matrix secondMatrix, Matrix outputMatrix,
+                             MatrixPosition posBegin, MatrixPosition posEnd) {
         this.firstMatrix = firstMatrix;
         this.secondMatrix = secondMatrix;
         this.outputMatrix = outputMatrix;
         this.posBegin = posBegin;
         this.posEnd = posEnd;
-        this.height = height;
-        this.width = width;
     }
 
     protected void computeFunction(int i, int j){
-        outputMatrix[i][j] = 0;
+        outputMatrix.value[i][j] = 0;
     }
 
     @Override
@@ -30,7 +27,7 @@ abstract public class ThreadedOperation implements Runnable{
         for (int i = posBegin.i; i <= posEnd.i; i++)
             if (i == posBegin.i){
                 if (i != posEnd.i)
-                    for (int j = posBegin.j; j < width; j++)
+                    for (int j = posBegin.j; j < outputMatrix.columns; j++)
                         computeFunction(i,j);
                 else
                     for (int j = posBegin.j; j <= posEnd.j; j++)
@@ -41,7 +38,7 @@ abstract public class ThreadedOperation implements Runnable{
                     computeFunction(i,j);
             }
             else
-                for (int j = 0; j < width; j++)
+                for (int j = 0; j < outputMatrix.columns; j++)
                     computeFunction(i,j);
     }
 }
