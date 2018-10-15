@@ -7,15 +7,9 @@ public class Main {
         Matrix secondMatrix = new Matrix("second.txt");
         Matrix resultMatrix = new Matrix(3, 4);
 
-        ThreadedAdd threadedAdd = new ThreadedAdd(
-                firstMatrix, secondMatrix, resultMatrix, new MatrixPosition(0,0), new MatrixPosition(2,3));
-        Thread thread = new Thread(threadedAdd);
-        thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        BalancedMultithredsAdd balancedMultithredsAdd = new BalancedMultithredsAdd(
+                firstMatrix, secondMatrix, resultMatrix, 5);
+        balancedMultithredsAdd.execute();
         resultMatrix.print();
     }
 }

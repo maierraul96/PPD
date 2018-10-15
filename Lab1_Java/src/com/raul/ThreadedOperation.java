@@ -1,6 +1,6 @@
 package com.raul;
 
-abstract public class ThreadedOperation implements Runnable{
+public class ThreadedOperation implements Runnable{
     protected Matrix firstMatrix;
     protected Matrix secondMatrix;
     protected Matrix outputMatrix;
@@ -22,8 +22,13 @@ abstract public class ThreadedOperation implements Runnable{
         outputMatrix.value[i][j] = 0;
     }
 
+    public void start(){
+        System.out.println(Thread.currentThread().getName());
+    }
+
     @Override
     public void run() {
+        System.out.println("i"+posBegin.i+"j"+posEnd.i);
         for (int i = posBegin.i; i <= posEnd.i; i++)
             if (i == posBegin.i){
                 if (i != posEnd.i)

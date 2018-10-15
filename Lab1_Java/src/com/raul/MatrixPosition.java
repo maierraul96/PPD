@@ -9,6 +9,12 @@ public class MatrixPosition {
         this.j = j;
     }
 
+    public MatrixPosition forward(int count, int height, int width){
+        int rank = this.i * width + this.j;
+        rank += count;
+        return new MatrixPosition(rank / width, rank % width);
+    }
+
     public int getI() {
         return i;
     }
