@@ -7,11 +7,10 @@ public class BalancedThreadOperationExecution{
     public int threadsCount;
     public MatrixPosition[][] loadDistribution;
 
-    public BalancedThreadOperationExecution(Matrix firstMatrix, Matrix secondMatrix, Matrix resultMatrix,
+    public BalancedThreadOperationExecution(Matrix firstMatrix, Matrix secondMatrix,
                                             int threadsCount) {
         this.firstMatrix = firstMatrix;
         this.secondMatrix = secondMatrix;
-        this.resultMatrix = resultMatrix;
         this.threadsCount = threadsCount;
         this.loadDistribution = new MatrixPosition[threadsCount][2];
         determine_result_dimensions();
@@ -19,8 +18,9 @@ public class BalancedThreadOperationExecution{
     }
 
     public void determine_result_dimensions(){
-        resultMatrix.rows = Math.max(firstMatrix.rows, secondMatrix.rows);
-        resultMatrix.columns = Math.max(firstMatrix.columns, secondMatrix.columns);
+        int rows = Math.max(firstMatrix.rows, secondMatrix.rows);
+        int columns = Math.max(firstMatrix.columns, secondMatrix.columns);
+        resultMatrix = new Matrix(rows, columns);
     }
 
     public int[] determinePositionsPerThread(){
@@ -61,12 +61,13 @@ public class BalancedThreadOperationExecution{
                 endPosition);
     }
 
-    public void execute(){
+    public Matrix execute(){
         Thread[] threads = new Thread[threadsCount];
         for (int i = 0; i < threadsCount; i++){
             String threadName = "Thread-("+loadDistribution[i][0].i+","+loadDistribution[i][0].j+")->("+
                     loadDistribution[i][1].i+","+loadDistribution[i][1].j+")";
             threads[i] = new Thread(initThreadedOperation(loadDistribution[i][0], loadDistribution[i][1]), threadName);
+            System.out.println("Starting: "+threads[i].getName());
             threads[i].start();
         }
         for (int i = 0; i < threadsCount; i++) {
@@ -76,5 +77,6 @@ public class BalancedThreadOperationExecution{
                 e.printStackTrace();
             }
         }
+        return resultMatrix;
     }
 }

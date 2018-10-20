@@ -3,13 +3,20 @@ package com.raul;
 public class Main {
 
     public static void main(String[] args) {
-        Matrix firstMatrix = new Matrix("first.txt");
-        Matrix secondMatrix = new Matrix("second.txt");
-        Matrix resultMatrix = new Matrix(3, 4);
+        Matrix firstMatrix = new Matrix(1000, 1000);
+        firstMatrix.randomize();
 
-        BalancedMultithredsAdd balancedMultithredsAdd = new BalancedMultithredsAdd(
-                firstMatrix, secondMatrix, resultMatrix, 5);
-        balancedMultithredsAdd.execute();
-        resultMatrix.print();
+        Matrix secondMatrix = new Matrix(1000, 1000);
+        secondMatrix.randomize();
+
+        Matrix resultMatrix;
+
+        long startTime = System.nanoTime();
+        resultMatrix = firstMatrix.multiply(secondMatrix, 8);
+        long finishTime = System.nanoTime();
+
+        System.out.println("Elasped time: " + Math.round((finishTime - startTime)/1000000));
+
+//        resultMatrix.print();
     }
 }

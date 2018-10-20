@@ -1,6 +1,7 @@
 package com.raul;
 
 import java.io.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Matrix {
     public String path;
@@ -74,5 +75,25 @@ public class Matrix {
                 System.out.print(value[i][j] + " ");
             System.out.println();
         }
+    }
+
+    public void randomize(){
+
+        this.value = new int[rows][columns];
+        for (int i = 0; i < rows; i++)
+            for (int j = 0; j< columns; j++)
+                this.value[i][j] = ThreadLocalRandom.current().nextInt(0, 1000);
+    }
+
+    public Matrix add(Matrix secondMatrix, int threadsCount){
+        BalancedMultithredsAdd balancedMultithreadsAdd = new BalancedMultithredsAdd(
+                this, secondMatrix, threadsCount);
+        return balancedMultithreadsAdd.execute();
+    }
+
+    public Matrix multiply(Matrix secondMatrix, int threadsCount){
+        BalancedMultithreadsProduct balancedMultithreadsProduct = new BalancedMultithreadsProduct(
+                this, secondMatrix, threadsCount);
+        return balancedMultithreadsProduct.execute();
     }
 }

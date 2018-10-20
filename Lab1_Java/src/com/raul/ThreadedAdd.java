@@ -9,7 +9,6 @@ public class ThreadedAdd extends ThreadedOperation {
 
     @Override
     protected void computeFunction(int i, int j){
-        System.out.println("Compute i:"+i+" j:"+j);
         outputMatrix.value[i][j] = firstMatrix.value[i][j] + secondMatrix.value[i][j];
     }
 }
